@@ -3,11 +3,21 @@ TimeTrack's persistence layer -- SQLite, shared by the website and the MCP
 server, exactly like RecipeBox's was. One real, professional use case this
 time: logging billable hours against projects, and summarizing them.
 """
+# import sqlite3
+# from pathlib import Path
+
+# DB_PATH = Path(__file__).parent / "timetrack.db"
+
+import os
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path(__file__).parent / "timetrack.db"
-
+DB_PATH = Path(
+    os.environ.get(
+        "TIMETRACK_DB_PATH",
+        "/tmp/timetrack.db"
+    )
+)
 
 def get_connection():
     conn = sqlite3.connect(DB_PATH)
